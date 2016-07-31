@@ -20,3 +20,6 @@ How I got here:
 	- git commit -m committing file deletions"
 	- git push origin master
 
+
+This link was very helpful in syncing:
+http://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master

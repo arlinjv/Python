@@ -1,0 +1,25 @@
+merged scripts on Vaio and Asus
+named repository Python which maybe was a mistake because folder is named scripts. It contains mostly python stuff but there is a lua folder, too.
+How I got here:
+- Vaio
+	- git init
+	- git add .
+	- git commit -m 'initial repository added'
+	- git remote add origin git@github.com:arlinjv/Python.git
+	- git push -u origin master
+	- git pull (to pick up changes made after adding Asus files)
+- Asus
+	- git init
+	- git add
+	- git pull https://github.com/arlinjv/Python
+	- git commit -m "initial commit on Asus" (should maybe have done this before above)
+	- git remote add origin https://github.com/arlinjv/Python.git
+	- git push origin master
+	- git status [showed deleted files not committed]
+	- git rm -r .ipynb_checkpoints
+	- git commit -m committing file deletions"
+	- git push origin master
+
+
+This link was very helpful in syncing:
+http://stackoverflow.com/questions/18137175/in-git-what-is-the-difference-between-origin-master-vs-origin-master
