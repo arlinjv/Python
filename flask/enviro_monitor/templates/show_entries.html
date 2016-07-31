@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+form {
+    float: left;
+    margin: 0 10px 0 0;
+}
+</style>
+<form action="{{ url_for('show_entries') }}" method = 'GET'>
+  <select name="device_ID">
+    <option value="all">All devices</option>
+    {% for device_ID in device_IDs %}
+        <option value={{ device_ID|safe }}>{{ device_ID|safe }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <input type="submit">
+</form>
+<form action="{{ url_for('show_entries') }}" method = 'GET'>
+  <select name="sensor_ID">
+    <option value="all">All sensors</option>
+    {% for sensor_ID in sensor_IDs %}
+        <option value={{ sensor_ID|safe }}>{{ sensor_ID|safe }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <input type="submit">
+</form>
+<form action="{{ url_for('show_entries') }}" method = 'GET'>
+  <select name="sensor_type">
+    <option value="all">All types</option>
+    {% for sensor_type in sensor_types %}
+        <option value={{ sensor_type|safe }}>{{ sensor_type|safe }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <input type="submit">
+</form>
+
+
+  <ul class=entries>
+    <table style="width:100%">
+  <tr>
+    <th>{{ columns.6 }}</th>
+    <th>{{ columns.1 }}</th>		
+    <th>{{ columns.2 }}</th>
+    <th>{{ columns.3 }}</th>
+    <th>{{ columns.4 }}</th>
+    <th>{{ columns.5 }}</th>
+  </tr>
+  {% for entry in entries %} <!-- entries is a list of tuples -->
+  <tr>
+    {% for item in entry %}  
+    <td>{{ item }}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}  
+</table>
+  </ul>
+{% endblock %}

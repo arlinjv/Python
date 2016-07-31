@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Alarm Monitor</title>
+    <style>
+        p { margin: 0; }
+    </style>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            namespace = '';  // change to an empty string to use the global namespace
+                             // using alarms room but no specific namespace
+            msgCount = 0;
+
+            // the socket.io documentation recommends sending an explicit package upon connection
+            // this is specially important when using the global namespace 
+            // See also: http://stackoverflow.com/questions/35384285/flask-socketio-server-using-polling-instead-of-websockets
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace); 
+
+            // event handler for server sent data
+            // the data is displayed in the "Received" section of the page
+            socket.on('alarm_received', function(msg) {
+                msgCount++;
+                var d = new Date();
+                var t = d.getTime();
+                var newLine = '<p> ' + '(' + msgCount + ')' + t + ': ' + msg + '</p>';
+                
+                $('#log').prepend(newLine);
+                
+                if ( msgCount > 10) {
+                    $('#log p:last').remove();// remove last paragraph
+                }
+                
+                //$('#log').append('<br>' + $('<div/>').text('(' + msgCount + ')' + t + ': ' + msg).html());
+                //$('#log').prepend('<p> ' + '(' + msgCount + ')' + t + ': ' + msg + '</p>') // consider moving this to a seperate frame later
+            });
+            socket.on('reload_page', function(){
+                location.reload(true);
+            });
+            socket.on('connect', function() {
+                socket.emit('connection event', {data: 'I\'m connected!'});
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Flask-SocketIO Test</h1>
+    <h2>Received:</h2>
+    <div id="log"></div>
+    <br>
+    <a href="{{ url_for('debug') }}">debug flask</a>
+    
+</body>
+</html>
